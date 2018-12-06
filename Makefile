@@ -13,7 +13,10 @@ ig: $(TARGET)
 
 so: $(TARGET)
 	test -d $(BUILD) || mkdir -p $(BUILD)
-	$(CC) $(wildcard $(SOURCE)/*.c) -luv -lhttp_parser -fPIC -shared -o $(BUILD)/ig.so
+	$(CC) $(wildcard $(SOURCE)/*.c) -luv -lhttp_parser -lpthread -D_GNU_SOURCE -fPIC -shared -std=c99 -o $(BUILD)/ig.so
+
+run: so
+	scheme --script scheme/server.sc
 
 $(OBJS)/%.o: $(SOURCE)/%.c
 	test -d $(OBJS) || mkdir -p $(OBJS)

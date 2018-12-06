@@ -11,6 +11,7 @@ void connection_handler(uv_stream_t* server, int status)
     if (status == -1)
         return;
     connection_t* conn = malloc(sizeof(connection_t));   
+    memset(conn, 0, sizeof(connection_t));
     uv_tcp_init(UV, &conn->handle);
     http_parser_init(&conn->parser, HTTP_REQUEST);
     conn->handle.data = conn;
