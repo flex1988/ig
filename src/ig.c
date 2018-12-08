@@ -61,13 +61,14 @@ char* ig_scheme_response(int status, char* type, char* path, char* query)
 int main()
 {
     int ret;
+    parser_settings.on_url = parse_url;
     parser_settings.on_message_begin = parse_message_begin;
+    parser_settings.on_headers_complete = parse_headers_complete;
+    parser_settings.on_message_complete = parse_message_complete;
+
     parser_settings.on_header_field = parse_header_field;
     parser_settings.on_header_value = parse_header_value;
-    parser_settings.on_url = parse_url;
-    parser_settings.on_headers_complete = parse_headers_complete;
     parser_settings.on_body = parse_body;
-    parser_settings.on_message_complete = parse_message_complete;
 
     UV = uv_default_loop();
     if (UV == NULL)
